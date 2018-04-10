@@ -10,7 +10,8 @@ package tama.kuh.chi;
  * @author root
  */
 public class hallo {
-
+    
+    // change x
     // change 
     
     // xxx
