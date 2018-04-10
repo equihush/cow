@@ -20,16 +20,17 @@ public class Kuhstall {
     private double futterimStall = 0;
     private double milchimStall = 0;
     
-    private ArrayList<Kuh> Stall=new ArrayList<>();
+    private ArrayList<Kuh> kuehe =new ArrayList<>();
     
-    public void kaufeKuh(Kuh kuh){
-        
-            Stall.add(kuh);
+    
+    
+    public void addKuh(Kuh kuh){
+            kuehe.add(kuh);
     }
     
     public void gebäreKuh(String name){
         Kuh neuesKalb = new Kuh(name, 35);
-        Stall.add(neuesKalb);
+        kuehe.add(neuesKalb);
         
     }
     

@@ -11,13 +11,10 @@ public class Kuh {
 //            lfdNr = lfdNr + 1;
 //        }
 //    }
-    
-    
     public static void xxx() {
-        
+
     }
-    
-    
+
     public Kuh() {
 
         id = lfdNr;
@@ -69,13 +66,7 @@ public class Kuh {
 
     }
 
-    public String getDaten() {
-        String daten = "\n-------------------------------------------\n"
-                + "Name:    " + this.getName() + "\n"
-                + "Gewicht: " + this.getGewicht() + "\n"
-                + "Milchvorrat: " + this.getMilchmenge() + "\n";
-        return daten;
-    }
+   
 
     public double getMilchmenge() {
         return milchmenge;
@@ -95,8 +86,15 @@ public class Kuh {
         return interneMilchmenge;
     }
 
+    // refactored into toString()
+//    public String getDaten() {
+//    }
     public String toString() {
-        return name + "," + gewicht;
+        String daten = "\n---------------------\n"
+                + "Name:    " + this.getName() + "\n"
+                + "Gewicht: " + this.getGewicht() + "\n"
+                + "Milchvorrat: " + this.getMilchmenge() + "\n";
+        return daten;
     }
 
     public String toCSVString() {

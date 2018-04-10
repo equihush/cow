@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 package view;
+import allgemein.NotificationNames;
 import model.Kuh;
-
+import notificationcenter.*;
 
 /**
  *
@@ -13,17 +14,18 @@ import model.Kuh;
  */
 public class KuhKaufenGUI extends javax.swing.JFrame {
 
-    KuhstallGUI parent;
-
     /**
      * Creates new form NeueKuh_GUI
      */
-    public KuhKaufenGUI(KuhstallGUI parent) {
+    public KuhKaufenGUI() {
         initComponents();
-        this.parent = parent;
     }
 
    
+    public void clearTextFields() {
+        this.nameTextField.setText("");
+        this.weightTextField.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +66,7 @@ public class KuhKaufenGUI extends javax.swing.JFrame {
             }
         });
 
-        cancelButton.setText("abbrechen");
+        cancelButton.setText("Fenster schließen");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -89,17 +91,17 @@ public class KuhKaufenGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(kaufeKuhButton))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(weightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                    .addComponent(weightTextField)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(90, 90, 90)
                         .addComponent(jLabel3)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,13 +136,15 @@ public class KuhKaufenGUI extends javax.swing.JFrame {
         
         Kuh newCow = new Kuh(name, gewicht);
         
-        // neue kuh anlegen
-        // TODO: implement MVC Pattern
+        NotificationCenter.shared.processNotification(NotificationNames.BOUGHT_NEW_COW, newCow);
+        
+        
         
     }//GEN-LAST:event_kaufeKuhButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        this.dispose();
+        //this.dispose();
+        NotificationCenter.shared.processNotification(NotificationNames.SEND_BUY_COW_GUI_TO_BACKGROUND);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -174,11 +178,11 @@ public class KuhKaufenGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new KuhKaufenGUI().setVisible(true);
-//            }
-//        });
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new KuhKaufenGUI().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,24 +4,52 @@
  * and open the template in the editor.
  */
 package controller;
+
+import allgemein.NotificationNames;
 import model.*;
 import view.*;
-/**
- *
- * @author macbookpro15
- */
+import notificationcenter.*;
+
 public class KuhstallManager {
 
-    // GUIs
-    private static KuhstallGUI kuhstallGUI = new KuhstallGUI();
-    
-    // models
-    private static Kuhstall kuhstall = new Kuhstall();
+    private static class GUIs {
+        private static KuhstallGUI KUHSTALL = new KuhstallGUI();
+        private static KuhKaufenGUI KUH_KAUFEN = new KuhKaufenGUI();
+    }
 
+    private static class Models {
+        private static final Kuhstall KUHSTALL = new Kuhstall();
+    }
     
-    
-    
+
     public static void main(String[] args) {
-        kuhstallGUI.setVisible(true);
+        GUIs.KUHSTALL.setVisible(true);
+
+        setupNotificationListoners();
+        
+
+    }
+
+    private static void setupNotificationListoners() {
+
+        // Go Lambda!
+        NotificationCenter.shared.add(new Notification(NotificationNames.BOUGHT_NEW_COW, (object) -> {
+            if (object instanceof Kuh) {
+                Kuh kuh = (Kuh) object;
+                Models.KUHSTALL.addKuh(kuh);
+                
+                GUIs.KUHSTALL.setNewCowData(kuh);
+                GUIs.KUH_KAUFEN.clearTextFields();
+            }
+        }));
+        
+        
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BUY_COW_GUI_TO_FRONT, (nil) -> {
+            GUIs.KUH_KAUFEN.setVisible(true);
+        }));
+
+         NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BUY_COW_GUI_TO_BACKGROUND, (nil) -> {
+            GUIs.KUH_KAUFEN.setVisible(false);
+        }));
     }
 }

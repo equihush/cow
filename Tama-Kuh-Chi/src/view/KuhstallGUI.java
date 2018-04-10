@@ -6,21 +6,16 @@
 package view;
 
 import allgemein.Bilder;
-import model.Kuhstall;
+import allgemein.NotificationNames;
+import notificationcenter.*;
+import model.*;
 
 /**
  *
  * @author macbookpro15
  */
 public class KuhstallGUI extends javax.swing.JFrame {
-
-    // simple popups
-    KuhKaufenGUI kuhKaufenGUI;
-    CopyrightGUI copyrightGUI;
         
-    
-    
-    
     /**
      * Creates new form KuhStallManagerGUI
      */
@@ -29,8 +24,12 @@ public class KuhstallGUI extends javax.swing.JFrame {
 
         cowImageLabel.setIcon(Bilder.Kuh.STEHEND);
         
-        kuhKaufenGUI = new KuhKaufenGUI(this);
-        copyrightGUI = new CopyrightGUI(this);
+    }
+    
+    
+    public void setNewCowData(Kuh cow) {
+        
+        cowDataTextArea.setText(cow.toString());
     }
 
     /**
@@ -62,7 +61,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
         cowImageLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        cowDataTextArea = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
@@ -214,9 +213,9 @@ public class KuhstallGUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Kuhdaten"));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        cowDataTextArea.setColumns(20);
+        cowDataTextArea.setRows(5);
+        jScrollPane1.setViewportView(cowDataTextArea);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -406,7 +405,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        kuhKaufenGUI.setVisible(true);
+        NotificationCenter.shared.processNotification(NotificationNames.SEND_BUY_COW_GUI_TO_FRONT);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
@@ -455,6 +454,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea cowDataTextArea;
     private javax.swing.JLabel cowImageLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -487,7 +487,6 @@ public class KuhstallGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JToggleButton jToggleButton1;
