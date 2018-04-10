@@ -17,7 +17,7 @@ public class Notification {
     }
 
     public Notification.Name name;
-
+    public Object object;
     public Block action; // = (T) -> {};
 
     public Notification(Notification.Name name, Block action) {
@@ -25,4 +25,8 @@ public class Notification {
         this.action = action;
     }
 
+    public Notification(Notification.Name name, Object object) {
+        this.name  = name;
+        this.object = object;
+    }
 }
