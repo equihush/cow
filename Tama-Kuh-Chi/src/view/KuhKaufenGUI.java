@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package view;
+import model.Kuh;
+
 
 /**
  *
@@ -11,12 +13,12 @@ package view;
  */
 public class KuhKaufenGUI extends javax.swing.JFrame {
 
-    KuhStallGUI parent;
+    KuhstallGUI parent;
 
     /**
      * Creates new form NeueKuh_GUI
      */
-    public KuhKaufenGUI(KuhStallGUI parent) {
+    public KuhKaufenGUI(KuhstallGUI parent) {
         initComponents();
         this.parent = parent;
     }
@@ -127,7 +129,14 @@ public class KuhKaufenGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
     private void kaufeKuhButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kaufeKuhButtonActionPerformed
-        // TODO add your handling code here:
+        String name = nameTextField.getText();
+        Double gewicht = Double.parseDouble(weightTextField.getText());
+        
+        Kuh newCow = new Kuh(name, gewicht);
+        
+        // neue kuh anlegen
+        // TODO: implement MVC Pattern
+        
     }//GEN-LAST:event_kaufeKuhButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

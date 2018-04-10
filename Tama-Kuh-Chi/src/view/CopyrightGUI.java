@@ -11,12 +11,12 @@ package view;
  */
 public class CopyrightGUI extends javax.swing.JFrame {
 
-    KuhStallGUI parent;
+    KuhstallGUI parent;
 
     /**
      * Creates new form CopyrightGUI
      */
-    public CopyrightGUI(KuhStallGUI parent) {
+    public CopyrightGUI(KuhstallGUI parent) {
         initComponents();
         this.parent = parent;
     }

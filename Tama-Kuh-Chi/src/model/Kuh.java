@@ -11,6 +11,13 @@ public class Kuh {
 //            lfdNr = lfdNr + 1;
 //        }
 //    }
+    
+    
+    public static void xxx() {
+        
+    }
+    
+    
     public Kuh() {
 
         id = lfdNr;
