@@ -9,11 +9,24 @@
  * @author c.schneider
  */
 public class Kuh {
+    
+//    public static void setLfdNr(int lfdNr){
+//        if(lfdNr>lfdNr){
+//            lfdNr = lfdNr + 1;
+//        }
+//    }
+    
+    public Kuh(){
+        
+        id=lfdNr;
+        lfdNr++;
+    }
    
     public Kuh (String Name, double Gewicht){
+        this();
         this.name = Name;
         if(Gewicht > MIN_GEWICHT){
-            this.Gewicht = Gewicht;
+            this.gewicht = Gewicht;
         }
     }
     
@@ -22,8 +35,12 @@ public class Kuh {
 
     
     String name;    
-    double Gewicht;
-    double Milchmenge;
+    double gewicht;
+    double milchmenge;
+    private int lfdNr = 0;
+    private int id = 0;
+
+   
     
     
     public static final double MIN_GEWICHT = 35;
@@ -40,40 +57,59 @@ public class Kuh {
         this.name = name;
     }
     
-    public double fressen(Double futtermenge){
-    double gewicht;    
-    double neuesGesamtGewicht = 0;
-    if(this.Gewicht < MAX_GEWICHT){ 
+    public void fressen(Double futtermenge){        
+   
+    if(this.gewicht < MAX_GEWICHT){ 
         if(futtermenge > 55 ){
-        this.Gewicht = this.Gewicht + (0.8 * futtermenge) ;
-        } else this.Gewicht = this.Gewicht + (0.8 * 55);
+        this.gewicht = this.gewicht + (0.8 * futtermenge) ;
+        } else this.gewicht = this.gewicht + (0.8 * 55);
         
-    if(this.Gewicht > 600 || this.Milchmenge < 25){
+    if(this.gewicht > 600 || this.milchmenge < 25){
         if(futtermenge > 55){
-            this.Milchmenge = this.Milchmenge + (0.5 * futtermenge);
-        }
-    }    
+            this.milchmenge = this.milchmenge + (0.5 * futtermenge);
+            }
+        }    
             
           
-    neuesGesamtGewicht = this.Gewicht + this.Milchmenge;     
-              
-               
-    }return neuesGesamtGewicht;
+    }  
+    
     
     
 }
+    
+    public String getDaten(){
+        String daten = "\n-------------------------------------------\n" +
+                "Name:    " + this.getName() + "\n" +
+                "Gewicht: " + this.getGewicht() + "\n" +
+                "Milchvorrat: " + this.getMilchmenge() + "\n";
+        return daten;
+    }
 
     public double getMilchmenge() {
-        return Milchmenge;
+        return milchmenge;
+    }
+    
+     public double getGewicht() {
+        return gewicht;
+    }
+
+    public void setGewicht(double gewicht) {
+        this.gewicht = gewicht;
     }
     
     public double melken(){
-        double interneMilchmenge = this.Milchmenge;
-        this.Milchmenge = 0;
+        double interneMilchmenge = this.milchmenge;
+        this.milchmenge = 0;
         return interneMilchmenge;
     }
     
+    public String toString(){
+        return name + "," + gewicht;
+    }
     
+    public String toCSVString(){
+        return id+";"+name+";"+gewicht+";"+milchmenge;
+    }
 
     
 }
