@@ -1,4 +1,4 @@
-package tama.kuh.chi;
+package model;
 import java.util.ArrayList;
 
 /*

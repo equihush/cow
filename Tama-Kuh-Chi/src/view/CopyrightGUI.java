@@ -1,20 +1,27 @@
+package view;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tama.kuh.chi;
-
 /**
  *
  * @author macbookpro15
  */
 public class CopyrightGUI extends javax.swing.JFrame {
 
+    KuhStallGUI parent;
+
     /**
      * Creates new form CopyrightGUI
      */
-    public CopyrightGUI() {
+    public CopyrightGUI(KuhStallGUI parent) {
+        initComponents();
+        this.parent = parent;
+    }
+    
+    private CopyrightGUI() {
         initComponents();
     }
 
