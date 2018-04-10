@@ -10,5 +10,6 @@ package tama.kuh.chi;
  * @author root
  */
 public class hallo {
-    
+    //VON OLI
+    // HALLOO
 }
