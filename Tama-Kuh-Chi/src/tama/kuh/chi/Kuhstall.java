@@ -1,3 +1,4 @@
+package tama.kuh.chi;
 import java.util.ArrayList;
 
 /*
