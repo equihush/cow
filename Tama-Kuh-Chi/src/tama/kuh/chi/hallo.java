@@ -10,10 +10,8 @@ package tama.kuh.chi;
  * @author root
  */
 public class hallo {
-<<<<<<< HEAD
+
     // xxx
-=======
     //VON OLI
     // HALLOO
->>>>>>> 3a528740570c4350de8b951bb6e21f747cec51f3
 }
