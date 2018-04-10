@@ -11,9 +11,5 @@ package tama.kuh.chi;
  */
 public class hallo {
 
-    // change 
-    
-    // xxx
-    //VON OLI
-    // HALLOO
+    //HIHI MARC IST DOOF
 }
