@@ -15,7 +15,7 @@ import model.*;
  * @author macbookpro15
  */
 public class KuhstallGUI extends javax.swing.JFrame {
-        
+
     /**
      * Creates new form KuhStallManagerGUI
      */
@@ -23,13 +23,12 @@ public class KuhstallGUI extends javax.swing.JFrame {
         initComponents();
 
         cowImageLabel.setIcon(Bilder.Kuh.STEHEND);
-        
+
     }
-    
-    
-    public void setNewCowData(Kuh cow) {
-        
+
+    public void updateWithCowData(Kuh cow, int currentCowIndex) {
         cowDataTextArea.setText(cow.toString());
+        currentCowIndexLabel.setText("" + currentCowIndex);
     }
 
     /**
@@ -63,19 +62,19 @@ public class KuhstallGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         cowDataTextArea = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jLabel12 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        showFirstCowData = new javax.swing.JToggleButton();
+        showPreviousCowData = new javax.swing.JToggleButton();
+        currentCowIndexLabel = new javax.swing.JLabel();
+        showNextCowData = new javax.swing.JButton();
+        showLastCowData = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        buyCowMenuItem = new javax.swing.JMenuItem();
+        bearNewCowMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -236,28 +235,33 @@ public class KuhstallGUI extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Datensatzsteuerung"));
 
-        jToggleButton1.setText("|<");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        showFirstCowData.setText("|<");
+        showFirstCowData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                showFirstCowDataActionPerformed(evt);
             }
         });
 
-        jToggleButton2.setText("<");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        showPreviousCowData.setText("<");
+        showPreviousCowData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                showPreviousCowDataActionPerformed(evt);
             }
         });
 
-        jLabel12.setText("0");
+        currentCowIndexLabel.setText("0");
 
-        jButton5.setText(">");
-
-        jButton6.setText(">|");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        showNextCowData.setText(">");
+        showNextCowData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                showNextCowDataActionPerformed(evt);
+            }
+        });
+
+        showLastCowData.setText(">|");
+        showLastCowData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showLastCowDataActionPerformed(evt);
             }
         });
 
@@ -267,15 +271,15 @@ public class KuhstallGUI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToggleButton1)
+                .addComponent(showFirstCowData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2)
+                .addComponent(showPreviousCowData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
+                .addComponent(currentCowIndexLabel)
                 .addGap(33, 33, 33)
-                .addComponent(jButton5)
+                .addComponent(showNextCowData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addComponent(showLastCowData)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -283,11 +287,11 @@ public class KuhstallGUI extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jToggleButton2)
-                    .addComponent(jLabel12)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(showFirstCowData)
+                    .addComponent(showPreviousCowData)
+                    .addComponent(currentCowIndexLabel)
+                    .addComponent(showNextCowData)
+                    .addComponent(showLastCowData))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -311,16 +315,16 @@ public class KuhstallGUI extends javax.swing.JFrame {
 
         jMenu2.setText("Bearbeiten");
 
-        jMenuItem1.setText("Kuh kaufen");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        buyCowMenuItem.setText("Kuh kaufen");
+        buyCowMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                buyCowMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(buyCowMenuItem);
 
-        jMenuItem2.setText("Kalb wird geboren");
-        jMenu2.add(jMenuItem2);
+        bearNewCowMenuItem.setText("Kalb wird geboren");
+        jMenu2.add(bearNewCowMenuItem);
 
         jMenuBar1.add(jMenu2);
 
@@ -388,25 +392,32 @@ public class KuhstallGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void showFirstCowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showFirstCowDataActionPerformed
+        NotificationCenter.shared.processNotification(NotificationNames.SHOW_FIRST_COW_DATA);
+    }//GEN-LAST:event_showFirstCowDataActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    private void showPreviousCowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPreviousCowDataActionPerformed
+        NotificationCenter.shared.processNotification(NotificationNames.SHOW_PREVIOUS_COW_DATA);
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_showPreviousCowDataActionPerformed
+
+    private void showLastCowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLastCowDataActionPerformed
+        NotificationCenter.shared.processNotification(NotificationNames.SHOW_LAST_COW_DATA);
+
+    }//GEN-LAST:event_showLastCowDataActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void buyCowMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyCowMenuItemActionPerformed
         NotificationCenter.shared.processNotification(NotificationNames.SEND_BUY_COW_GUI_TO_FRONT);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    }//GEN-LAST:event_buyCowMenuItemActionPerformed
+
+    private void showNextCowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showNextCowDataActionPerformed
+        NotificationCenter.shared.processNotification(NotificationNames.SHOW_NEXT_COW_DATA);
+
+    }//GEN-LAST:event_showNextCowDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -454,17 +465,17 @@ public class KuhstallGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem bearNewCowMenuItem;
+    private javax.swing.JMenuItem buyCowMenuItem;
     private javax.swing.JTextArea cowDataTextArea;
     private javax.swing.JLabel cowImageLabel;
+    private javax.swing.JLabel currentCowIndexLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -477,8 +488,6 @@ public class KuhstallGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -489,7 +498,9 @@ public class KuhstallGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton showFirstCowData;
+    private javax.swing.JButton showLastCowData;
+    private javax.swing.JButton showNextCowData;
+    private javax.swing.JToggleButton showPreviousCowData;
     // End of variables declaration//GEN-END:variables
 }
