@@ -10,5 +10,5 @@ package tama.kuh.chi;
  * @author root
  */
 public class hallo {
-    
+    // xxx
 }
