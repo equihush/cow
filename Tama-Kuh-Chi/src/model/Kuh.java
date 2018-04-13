@@ -1,88 +1,59 @@
 package model;
 
+import errorHandling.*;
+import static java.lang.Math.*;
+
 /**
  *
  * @author c.schneider
  */
 public class Kuh {
 
-//    public static void setLfdNr(int lfdNr){
-//        if(lfdNr>lfdNr){
-//            lfdNr = lfdNr + 1;
-//        }
-//    }
-    public static void xxx() {
+    // R12
+    public static final double GEWICHT_MAX = 600;
+    // geburtsgewicht einer Kuh
+    public static final double GEWICHT_MIN = 35;
+    public static final double WIRKUNGSGRAD_FUTTER_GEWICHTSZUNAHME_JUNGTIER = 0.8;
+    public static final double WIRKUNGSGRAD_FUTTER_MILCHZUNAHME_ERWTIER = 0.5;
+    public static final double FUTTERAUFNAHME_MAX = 55;
+    // max milchmenge einer kuh im euter
+    public static final double MILCHMENGE_MAX = 25L;
 
-    }
-
-    public Kuh() {
-
-        id = lfdNr;
-        lfdNr++;
-    }
+    private String name;
+    private double gewicht;
+    private double milchMenge;
 
     public Kuh(String Name, double Gewicht) {
-        this();
         this.name = Name;
-        if (Gewicht > MIN_GEWICHT) {
-            this.gewicht = Gewicht;
-        }
+        this.gewicht = (gewicht >= Kuh.GEWICHT_MIN) ? gewicht : Kuh.GEWICHT_MIN;
     }
 
-    String name;
-    double gewicht;
-    double milchmenge;
-    private int lfdNr = 0;
-    private int id = 0;
-
-    public static final double MIN_GEWICHT = 35;
-    public static final double MAX_GEWICHT = 600;
-    public static final double MAX_MILCHMENGE = 25;
-
-    public String getName() {
-        return name;
+    public static Kuh makeCalf(String name) {
+        return new Kuh(name, Kuh.GEWICHT_MIN);
     }
+    
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void feed(Double futterMenge) throws KuhStallException {
 
-    public void fressen(Double futtermenge) {
-
-        if (this.gewicht < MAX_GEWICHT) {
-            if (futtermenge > 55) {
-                this.gewicht = this.gewicht + (0.8 * futtermenge);
-            } else {
-                this.gewicht = this.gewicht + (0.8 * 55);
-            }
-
-            if (this.gewicht > 600 || this.milchmenge < 25) {
-                if (futtermenge > 55) {
-                    this.milchmenge = this.milchmenge + (0.5 * futtermenge);
-                }
-            }
-
+        if (milchMenge < Kuh.MILCHMENGE_MAX) {
+            this.gewicht += (futterMenge <= Kuh.FUTTERAUFNAHME_MAX) ? futterMenge : Kuh.FUTTERAUFNAHME_MAX;
+        } else {
+            // Kuhstall R29
+            throw new KuhStallException("Euter voll - kuh muss erst gemolken werden bevor neues Futter in Milch umgewandelt wird.");
         }
 
+        if (gewicht <= Kuh.GEWICHT_MAX) {
+            this.milchMenge += futterMenge * Kuh.WIRKUNGSGRAD_FUTTER_GEWICHTSZUNAHME_JUNGTIER;
+        } else {
+            this.milchMenge += futterMenge * Kuh.WIRKUNGSGRAD_FUTTER_MILCHZUNAHME_ERWTIER;
+        }
+        this.milchMenge = min(25.0, this.milchMenge);
+
     }
 
-   
-
-    public double getMilchmenge() {
-        return milchmenge;
-    }
-
-    public double getGewicht() {
-        return gewicht;
-    }
-
-    public void setGewicht(double gewicht) {
-        this.gewicht = gewicht;
-    }
-
-    public double melken() {
-        double interneMilchmenge = this.milchmenge;
-        this.milchmenge = 0;
+    public double milk() {
+        double interneMilchmenge = this.milchMenge;
+        this.milchMenge = 0;
         return interneMilchmenge;
     }
 
@@ -93,12 +64,25 @@ public class Kuh {
         String daten = "\n---------------------\n"
                 + "Name:    " + this.getName() + "\n"
                 + "Gewicht: " + this.getGewicht() + "\n"
-                + "Milchvorrat: " + this.getMilchmenge() + "\n";
+                + "Milchvorrat: " + this.getMilchMenge() + "\n";
         return daten;
     }
 
     public String toCSVString() {
-        return id + ";" + name + ";" + gewicht + ";" + milchmenge;
+        System.out.println("ERROR method not implemented");
+        return "ERROR method not implemented";
     }
 
+    
+    // GETTER & SETTER
+    
+    public String getName() {
+        return name;
+    }
+    public double getGewicht() {
+        return gewicht + milchMenge;
+    }
+    public double getMilchMenge() {
+        return milchMenge;
+    }
 }

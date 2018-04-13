@@ -14,10 +14,23 @@ import notificationcenter.Notification;
 public class NotificationNames {
 
     // KuhstallGUI
+    public static final Notification.Name UPDATE_KUHSTALL_GUI = new Notification.Name("SHOW_FIRST_COW_DATA");
     public static final Notification.Name SHOW_NEXT_COW_DATA = new Notification.Name("SHOW_NEXT_COW_DATA");
     public static final Notification.Name SHOW_PREVIOUS_COW_DATA = new Notification.Name("SHOW_PREVIOUS_COW_DATA");
     public static final Notification.Name SHOW_LAST_COW_DATA = new Notification.Name("SHOW_LAST_COW_DATA");
     public static final Notification.Name SHOW_FIRST_COW_DATA = new Notification.Name("SHOW_FIRST_COW_DATA");
+    
+
+        
+    
+    public static final Notification.Name ADD_FOOD_TO_STORE = new Notification.Name("ADD_FOOD_TO_STORE"); 
+    public static final Notification.Name MELK_ALL_COWS = new Notification.Name("MELKE_KUEHE");
+    public static final Notification.Name DELIVER_MILK = new Notification.Name("DELIVER_MILK");
+    public static final Notification.Name FEED_COWS = new Notification.Name("FEED_COWS");
+
+
+
+//public static final Notification.Name XXX = new Notification.Name("XXX");
 
     // KuhKaufenGUI
     public static final Notification.Name BOUGHT_NEW_COW = new Notification.Name("BOUGHT_NEW_COW");

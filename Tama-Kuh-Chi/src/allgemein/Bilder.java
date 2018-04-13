@@ -20,7 +20,6 @@ public class Bilder {
         public static final ImageIcon FRESSEND = getImageIcon(ImageNames.Kuh_.FRISST);
         public static final ImageIcon WIRD_GEMOLKEN = getImageIcon(ImageNames.Kuh_.WIRD_GEMOLKEN);
 
-        
         private static class FolderNames {
             static String source = "src";
             static String images = "z_bilder";
