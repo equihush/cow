@@ -6,13 +6,15 @@
 package view;
 
 import allgemein.Bilder;
+import allgemein.MyTimer;
 import allgemein.NotificationNames;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.Icon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import notificationcenter.*;
 import model.*;
-
-import notificationcenter.*;
+import java.util.TimerTask;
 
 /**
  *
@@ -20,14 +22,14 @@ import notificationcenter.*;
  */
 public class KuhstallGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form KuhStallManagerGUI
-     */
+    public static final int ANIMATION_DURATION /*secends*/ = 3;
     public KuhstallGUI() {
         initComponents();
 
-        cowImageLabel.setIcon(Bilder.Kuh.STEHEND);
+    }
 
+    public void doStuff() {
+        //do stuff here
     }
 
     public void updateWithCowData(Kuh cow, int currentCowIndex, int totalCowsInStock) {
@@ -81,7 +83,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
         buyCowMenuItem = new javax.swing.JMenuItem();
         bearNewCowMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        copyrightMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -215,7 +217,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
         );
 
         cowImageLabel.setBackground(new java.awt.Color(153, 153, 153));
-        cowImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/z_bilder/kuh - wird gemolken.gif"))); // NOI18N
+        cowImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/z_bilder/kuh - steht.gif"))); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Kuhdaten"));
 
@@ -331,14 +333,24 @@ public class KuhstallGUI extends javax.swing.JFrame {
         jMenu2.add(buyCowMenuItem);
 
         bearNewCowMenuItem.setText("Kalb wird geboren");
+        bearNewCowMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bearNewCowMenuItemActionPerformed(evt);
+            }
+        });
         jMenu2.add(bearNewCowMenuItem);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Extras");
 
-        jMenuItem3.setText("Info");
-        jMenu3.add(jMenuItem3);
+        copyrightMenuItem.setText("@coin side of life");
+        copyrightMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyrightMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(copyrightMenuItem);
 
         jMenuBar1.add(jMenu3);
 
@@ -396,6 +408,8 @@ public class KuhstallGUI extends javax.swing.JFrame {
         double newFoodAmount = Double.parseDouble(futterMengeTextField.getText());
         double foodInKg = newFoodAmount * 1000.0;
         NotificationCenter.shared.processNotification(NotificationNames.ADD_FOOD_TO_STORE, foodInKg);
+
+
     }//GEN-LAST:event_addFutterMengeButtonActionPerformed
 
     private void showFirstCowDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showFirstCowDataActionPerformed
@@ -427,7 +441,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
 
     private void feedCowsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feedCowsButtonActionPerformed
         NotificationCenter.shared.processNotification(NotificationNames.FEED_COWS);
-        
+
     }//GEN-LAST:event_feedCowsButtonActionPerformed
 
     private void melkenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_melkenButtonActionPerformed
@@ -438,12 +452,20 @@ public class KuhstallGUI extends javax.swing.JFrame {
         NotificationCenter.shared.processNotification(NotificationNames.DELIVER_MILK);
     }//GEN-LAST:event_deliverMilkButtonPressedActionPerformed
 
-    
+    private void copyrightMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyrightMenuItemActionPerformed
+        NotificationCenter.shared.processNotification(NotificationNames.SEND_COPYRIGHT_GUI_TO_FRONT);
+
+    }//GEN-LAST:event_copyrightMenuItemActionPerformed
+
+    private void bearNewCowMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bearNewCowMenuItemActionPerformed
+        NotificationCenter.shared.processNotification(NotificationNames.SEND_BORE_NEW_CALF_GUI_TO_FRONT);
+    }//GEN-LAST:event_bearNewCowMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -454,16 +476,24 @@ public class KuhstallGUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KuhstallGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KuhstallGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KuhstallGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KuhstallGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KuhstallGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KuhstallGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KuhstallGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KuhstallGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -485,26 +515,46 @@ public class KuhstallGUI extends javax.swing.JFrame {
 //        });
     }
 
-    
     // LABEL GETTERs
     public JLabel getStoredFoodAmountLabel() {
         return StoredFoodAmountLabel;
     }
+
     public JLabel getDemandFoodLabel() {
         return demandFoodLabel;
     }
+
     public JLabel getMilkTankVolumeLabel() {
         return milkTankVolumeLabel;
     }
-    
 
+    public JLabel getCowImageLabel() {
+        return cowImageLabel;
+    }
+
+    private Timer timer = new Timer();
+
+    public void performAnimation(Icon icon) {
+        this.performAnimation(icon, KuhstallGUI.ANIMATION_DURATION); 
+    }
     
-    
+    public void performAnimation(Icon icon, int durationInSeconds) {
+        cowImageLabel.setIcon(icon);
+        timer.schedule(new TimerTask() {
+            @Override
+        public void run() {
+               cowImageLabel.setIcon(Bilder.Kuh.STEHEND);
+            }
+        }, 1000 * durationInSeconds);
+        
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel StoredFoodAmountLabel;
     private javax.swing.JButton addFutterMengeButton;
     private javax.swing.JMenuItem bearNewCowMenuItem;
     private javax.swing.JMenuItem buyCowMenuItem;
+    private javax.swing.JMenuItem copyrightMenuItem;
     private javax.swing.JTextArea cowDataTextArea;
     private javax.swing.JLabel cowImageLabel;
     private javax.swing.JLabel currentCowIndexLabel;
@@ -524,7 +574,6 @@ public class KuhstallGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

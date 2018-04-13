@@ -5,21 +5,31 @@
  */
 package controller;
 
+import allgemein.Bilder;
+import allgemein.MyTimer;
 import allgemein.NotificationNames;
 import model.*;
 import view.*;
 
 import notificationcenter.*;
 import errorHandling.KuhStallException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class KuhstallManager {
+
+    
 
     private static class GUIs {
 
         private static KuhstallGUI KUHSTALL = new KuhstallGUI();
         private static KuhKaufenGUI KUH_KAUFEN = new KuhKaufenGUI();
+        private static BearCalfGUI BEARCALF = new BearCalfGUI();
+        private static CopyrightGUI COPYRIGHT = new CopyrightGUI();
     }
 
     private static class Models {
@@ -36,12 +46,33 @@ public class KuhstallManager {
     // Go Lambda!
     private static void setupNotificationListoners() {
 
-        setupCowGUIListoners();
+        setupBuyCowGUIListoners();
+        setupBearCalfGUIListoners();
         setupKuhStallGUIListoners();
+        setupCopyrightGUIListoners();
     }
 
-    private static void setupCowGUIListoners() {
+    private static void setupCopyrightGUIListoners() {
+        // [MENUITEM]
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_COPYRIGHT_GUI_TO_FRONT, (nil) -> {
+            GUIs.COPYRIGHT.setVisible(true);
+        }));
+        // [CANCEL]
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_COPYRIGHT_GUI_TO_BACKGROUND, (nil) -> {
+            GUIs.COPYRIGHT.setVisible(false);
+        }));
+    }
 
+    private static void setupBuyCowGUIListoners() {
+        // [MENUITEM]
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BUY_COW_GUI_TO_FRONT, (nil) -> {
+            GUIs.KUH_KAUFEN.setVisible(true);
+        }));
+        // [CANCEL]
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BUY_COW_GUI_TO_BACKGROUND, (nil) -> {
+            GUIs.KUH_KAUFEN.setVisible(false);
+        }));
+        // [BUY COW]
         NotificationCenter.shared.add(new Notification(NotificationNames.BOUGHT_NEW_COW, (object) -> {
             if (object instanceof Kuh) {
                 Kuh kuh = (Kuh) object;
@@ -56,14 +87,30 @@ public class KuhstallManager {
                 GUIs.KUH_KAUFEN.clearTextFields();
             }
         }));
+    }
 
-        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BUY_COW_GUI_TO_FRONT, (nil) -> {
-            GUIs.KUH_KAUFEN.setVisible(true);
+    public static void setupBearCalfGUIListoners() {
+        // [MENUITEM]
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BORE_NEW_CALF_GUI_TO_FRONT, (nil) -> {
+            GUIs.BEARCALF.setVisible(true);
         }));
+        // [CANCEL]
+        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BORE_NEW_CALF_GUI_TO_BACKGROUND, (nil) -> {
+            GUIs.BEARCALF.setVisible(false);
+        }));
+        // [BORE NEW]
+        NotificationCenter.shared.add(new Notification(NotificationNames.BORE_NEW_CALF, (object) -> {
+            if (object instanceof String) {
+                String name = (String) object;
+                try {
+                    Models.KUHSTALL.bearCalf(name);
+                } catch (KuhStallException e) {
+                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getDescription());
+                }
 
-        NotificationCenter.shared.add(new Notification(NotificationNames.SEND_BUY_COW_GUI_TO_BACKGROUND, (nil) -> {
-            GUIs.KUH_KAUFEN.setVisible(false);
-            System.out.println("recieved notivication: SEND_BUY_COW_GUI_TO_BACKGROUND");
+                NotificationCenter.shared.processNotification(NotificationNames.SHOW_LAST_COW_DATA);
+                GUIs.BEARCALF.clearTextFields();
+            }
         }));
     }
 
@@ -78,8 +125,7 @@ public class KuhstallManager {
             int currentCowIndex = Models.KUHSTALL.getCurrentCowIndex();
 
             double milk = Models.KUHSTALL.getLagerMengeMilch();
-            
-            
+
             GUIs.KUHSTALL.getStoredFoodAmountLabel().setText("" + foodAmountInStock);
             GUIs.KUHSTALL.getDemandFoodLabel().setText("" + calculatedTotalAmountOfFood);
             GUIs.KUHSTALL.getMilkTankVolumeLabel().setText("" + milkAmountInStock);
@@ -112,8 +158,8 @@ public class KuhstallManager {
         NotificationCenter.shared.add(new Notification(NotificationNames.FEED_COWS, (nil) -> {
             try {
                 Models.KUHSTALL.feedAllCowsEqually();
-
                 NotificationCenter.shared.processNotification(NotificationNames.UPDATE_KUHSTALL_GUI);
+                GUIs.KUHSTALL.performAnimation(Bilder.Kuh.FRESSEND, 5);
 
             } catch (KuhStallException e) {
                 JOptionPane.showMessageDialog(null, "ERROR: " + e.getDescription());
@@ -123,6 +169,7 @@ public class KuhstallManager {
         NotificationCenter.shared.add(new Notification(NotificationNames.MELK_ALL_COWS, (nil) -> {
             Models.KUHSTALL.milkAllCows();
             NotificationCenter.shared.processNotification(NotificationNames.UPDATE_KUHSTALL_GUI);
+            GUIs.KUHSTALL.performAnimation(Bilder.Kuh.WIRD_GEMOLKEN);
         }));
 
         // DATENSATZSTEUERUNG

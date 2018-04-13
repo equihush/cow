@@ -59,8 +59,11 @@ public class Kuhstall {
         }
     }
 
-    public void bearCalf(String name) {
-        kuehe.add(Kuh.makeCalf(name));
+    public void bearCalf(String name) throws KuhStallException {
+        
+        addKuh(Kuh.makeCalf(name));
+        
+        
     }
 
     public double deliverTotalMilkAmountInStock() {

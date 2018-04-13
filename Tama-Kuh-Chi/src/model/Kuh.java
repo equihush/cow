@@ -10,9 +10,9 @@ import static java.lang.Math.*;
 public class Kuh {
 
     // R12
-    public static final double GEWICHT_MAX = 600;
+    public static final double GEWICHT_MAX = 600.0;
     // geburtsgewicht einer Kuh
-    public static final double GEWICHT_MIN = 35;
+    public static final double GEWICHT_MIN = 35.0;
     public static final double WIRKUNGSGRAD_FUTTER_GEWICHTSZUNAHME_JUNGTIER = 0.8;
     public static final double WIRKUNGSGRAD_FUTTER_MILCHZUNAHME_ERWTIER = 0.5;
     public static final double FUTTERAUFNAHME_MAX = 55;
@@ -23,7 +23,7 @@ public class Kuh {
     private double gewicht;
     private double milchMenge;
 
-    public Kuh(String Name, double Gewicht) {
+    public Kuh(String Name, double gewicht) {
         this.name = Name;
         this.gewicht = (gewicht >= Kuh.GEWICHT_MIN) ? gewicht : Kuh.GEWICHT_MIN;
     }
@@ -35,11 +35,14 @@ public class Kuh {
 
     public void feed(Double futterMenge) throws KuhStallException {
 
-        if (milchMenge < Kuh.MILCHMENGE_MAX) {
-            this.gewicht += (futterMenge <= Kuh.FUTTERAUFNAHME_MAX) ? futterMenge : Kuh.FUTTERAUFNAHME_MAX;
-        } else {
-            // Kuhstall R29
+        if (milchMenge >= Kuh.MILCHMENGE_MAX) {
             throw new KuhStallException("Euter voll - kuh muss erst gemolken werden bevor neues Futter in Milch umgewandelt wird.");
+        } else {
+            if (futterMenge <= Kuh.FUTTERAUFNAHME_MAX) {
+                this.gewicht += futterMenge;
+            } else {
+                this.gewicht += Kuh.FUTTERAUFNAHME_MAX;
+            }
         }
 
         if (gewicht <= Kuh.GEWICHT_MAX) {

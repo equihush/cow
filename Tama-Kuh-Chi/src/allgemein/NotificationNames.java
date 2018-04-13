@@ -36,5 +36,15 @@ public class NotificationNames {
     public static final Notification.Name BOUGHT_NEW_COW = new Notification.Name("BOUGHT_NEW_COW");
     public static final Notification.Name SEND_BUY_COW_GUI_TO_FRONT = new Notification.Name("SEND_BUY_COW_GUI_TO_FRONT");
     public static final Notification.Name SEND_BUY_COW_GUI_TO_BACKGROUND = new Notification.Name("SEND_BUY_COW_GUI_TO_BACKGROUND");
+    
+    // BearCalfGUI
+    public static final Notification.Name BORE_NEW_CALF = new Notification.Name("BORE_NEW_CALF");
+    public static final Notification.Name SEND_BORE_NEW_CALF_GUI_TO_FRONT = new Notification.Name("SEND_BORE_NEW_CALF_GUI_TO_FRONT");
+    public static final Notification.Name SEND_BORE_NEW_CALF_GUI_TO_BACKGROUND = new Notification.Name("SEND_BORE_NEW_CALF_GUI_TO_BACKGROUND");
+    
+    // COPYRIGHT GUI
+    public static final Notification.Name SEND_COPYRIGHT_GUI_TO_FRONT = new Notification.Name("SEND_COPYRIGHT_GUI_TO_FRONT");
+    public static final Notification.Name SEND_COPYRIGHT_GUI_TO_BACKGROUND = new Notification.Name("SEND_COPYRIGHT_GUI_TO_BACKGROUND");
+    
 
 }
