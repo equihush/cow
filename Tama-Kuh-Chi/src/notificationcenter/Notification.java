@@ -7,6 +7,8 @@ package notificationcenter;
 
 public class Notification {
 
+   
+
     public static class Name {
 
         public String rawValue;

@@ -11,22 +11,15 @@ package errorHandling;
  */
 public class KuhStallException extends Exception {
 
-    private String description = "";
-
-    public KuhStallException(String description) {
-        super();
-        this.description = description;
+    public KuhStallException(Throwable cause) {
+        super(cause);
     }
-
-    public KuhStallException(KuhStallException e) {
-        super();
-        this.description = e.description;
-    }
-
     
-    // GETTER
-    public String getDescription() {
-        return description;
+    public KuhStallException(String message) {
+        super(message);
     }
-
+    
+    public KuhStallException() {
+        super("Unbekannte Kuhstall-Exeption");
+    }
 }

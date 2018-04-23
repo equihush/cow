@@ -22,8 +22,6 @@ import javax.swing.Timer;
 
 public class KuhstallManager {
 
-    
-
     private static class GUIs {
 
         private static KuhstallGUI KUHSTALL = new KuhstallGUI();
@@ -50,6 +48,12 @@ public class KuhstallManager {
         setupBearCalfGUIListoners();
         setupKuhStallGUIListoners();
         setupCopyrightGUIListoners();
+
+        // übergabe des objekts als generischer typ
+        Notification n = new Notification(NotificationNames.BOUGHT_NEW_COW, (obj) -> {
+        });
+        NotificationCenter.shared.add(n);
+
     }
 
     private static void setupCopyrightGUIListoners() {
@@ -80,7 +84,7 @@ public class KuhstallManager {
                     Models.KUHSTALL.addKuh(kuh);
 
                 } catch (KuhStallException e) {
-                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getDescription());
+                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
                 }
 
                 NotificationCenter.shared.processNotification(NotificationNames.SHOW_LAST_COW_DATA);
@@ -105,7 +109,7 @@ public class KuhstallManager {
                 try {
                     Models.KUHSTALL.bearCalf(name);
                 } catch (KuhStallException e) {
-                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getDescription());
+                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
                 }
 
                 NotificationCenter.shared.processNotification(NotificationNames.SHOW_LAST_COW_DATA);
@@ -117,7 +121,7 @@ public class KuhstallManager {
     private static void setupKuhStallGUIListoners() {
 
         // UPDATE
-        NotificationCenter.shared.add(new Notification(NotificationNames.UPDATE_KUHSTALL_GUI, (nil) -> {
+        NotificationCenter.shared.add(new Notification(NotificationNames.UPDATE_KUHSTALL_GUI, (obj) -> {
             double foodAmountInStock = Models.KUHSTALL.getLagerMengeFutter();
             double milkAmountInStock = Models.KUHSTALL.getLagerMengeMilch();
             double calculatedTotalAmountOfFood = Models.KUHSTALL.calculatedTotalAmountOfFood();
@@ -144,14 +148,17 @@ public class KuhstallManager {
                     NotificationCenter.shared.processNotification(NotificationNames.UPDATE_KUHSTALL_GUI);
 
                 } catch (KuhStallException e) {
-                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getDescription());
+                    JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
                 }
             }
         }));
 
         NotificationCenter.shared.add(new Notification(NotificationNames.DELIVER_MILK, (nil) -> {
-            Models.KUHSTALL.deliverTotalMilkAmountInStock();
-
+            try {
+                Models.KUHSTALL.deliverTotalMilkAmountInStock();
+            } catch (KuhStallException e) {
+                JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
+            }
             NotificationCenter.shared.processNotification(NotificationNames.UPDATE_KUHSTALL_GUI);
         }));
 
@@ -162,7 +169,7 @@ public class KuhstallManager {
                 GUIs.KUHSTALL.performAnimation(Bilder.Kuh.FRESSEND, 5);
 
             } catch (KuhStallException e) {
-                JOptionPane.showMessageDialog(null, "ERROR: " + e.getDescription());
+                JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
             }
         }));
 
@@ -180,14 +187,13 @@ public class KuhstallManager {
             }
         }));
 
-        NotificationCenter.shared.add(
-                new Notification(NotificationNames.SHOW_NEXT_COW_DATA, (nil) -> {
+        NotificationCenter.shared.add(new Notification(NotificationNames.SHOW_NEXT_COW_DATA, (nil) -> {
                     Kuh cow = Models.KUHSTALL.getNextCow();
                     if (cow != null) {
                         GUIs.KUHSTALL.updateWithCowData(cow, Models.KUHSTALL.getCurrentCowIndex(), Models.KUHSTALL.getTotalCowsInStock());
                     }
                 }
-                ));
+        ));
 
         NotificationCenter.shared.add(
                 new Notification(NotificationNames.SHOW_PREVIOUS_COW_DATA, (nil) -> {

@@ -42,11 +42,15 @@ public class Kuhstall {
 
     public void addFutterMenge(double futterMenge) throws KuhStallException {
 
-        boolean didReachMaxCapacity = false;
+        boolean supplyMaxReached = false;
         lagerMengeFutter += futterMenge;
-        lagerMengeFutter = min(20_000/*kg*/, lagerMengeFutter);
+        
+        if (lagerMengeFutter >= LAGERVOLUMEN_FUTTER_MAX) {
+            supplyMaxReached = true;
+        }
+        lagerMengeFutter = min(LAGERVOLUMEN_FUTTER_MAX/*kg*/, lagerMengeFutter);
 
-        if (didReachMaxCapacity) {
+        if (supplyMaxReached) {
             throw new KuhStallException("Maximales Lagervolumen an Futter erreicht.");
         }
     }
@@ -66,12 +70,15 @@ public class Kuhstall {
         
     }
 
-    public double deliverTotalMilkAmountInStock() {
+    public double deliverTotalMilkAmountInStock() throws KuhStallException {
         double amountOfMilkToDeliver = this.lagerMengeMilch;
         this.lagerMengeMilch = 0;
 
         NotificationCenter.shared.processNotification(NotificationNames.UPDATE_KUHSTALL_GUI);
 
+        if(amountOfMilkToDeliver == 0) {
+            throw new KuhStallException("keine Milch im Milchtank");
+        }
         return amountOfMilkToDeliver;
     }
 
@@ -87,6 +94,9 @@ public class Kuhstall {
             amountFoodPerCow = min(amountFoodPerCow, Kuh.FUTTERAUFNAHME_MAX);
             
             for (Kuh kuh : kuehe) {
+                if(kuh.getMilchMenge() >= Kuh.MILCHMENGE_MAX) {
+                        throw new KuhStallException(kuh.getName() + " " + "muss erst gemolken werden");
+                    }
                 try {
                     kuh.feed(amountFoodPerCow);
                     lagerMengeFutter -= amountFoodPerCow;

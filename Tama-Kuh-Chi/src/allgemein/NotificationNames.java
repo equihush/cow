@@ -19,8 +19,7 @@ public class NotificationNames {
     public static final Notification.Name SHOW_PREVIOUS_COW_DATA = new Notification.Name("SHOW_PREVIOUS_COW_DATA");
     public static final Notification.Name SHOW_LAST_COW_DATA = new Notification.Name("SHOW_LAST_COW_DATA");
     public static final Notification.Name SHOW_FIRST_COW_DATA = new Notification.Name("SHOW_FIRST_COW_DATA");
-    
-
+   
         
     
     public static final Notification.Name ADD_FOOD_TO_STORE = new Notification.Name("ADD_FOOD_TO_STORE"); 
