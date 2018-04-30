@@ -28,7 +28,7 @@ public class DateiManager {
         fileChooser = new JFileChooser(standardPfad);
 
 
-        FileNameExtensionFilter extFilter = new FileNameExtensionFilter("PC-Daten (*.dat)", "dat");
+        FileNameExtensionFilter extFilter = new FileNameExtensionFilter(".csv-Datei (*.csv)", "csv");
         fileChooser.setFileFilter(extFilter);
     }
     
