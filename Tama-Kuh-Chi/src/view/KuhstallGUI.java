@@ -6,6 +6,7 @@
 package view;
 
 import allgemein.Bilder;
+import allgemein.DateiManager;
 import allgemein.MyTimer;
 import allgemein.NotificationNames;
 import java.util.Timer;
@@ -15,13 +16,16 @@ import javax.swing.JLabel;
 import notificationcenter.*;
 import model.*;
 import java.util.TimerTask;
-
+import allgemein.DateiManager;
 /**
  *
  * @author macbookpro15
  */
 public class KuhstallGUI extends javax.swing.JFrame {
 
+    DateiManager dateiManager = new DateiManager(this); 
+
+        
     public static final int ANIMATION_DURATION /*secends*/ = 3;
     public KuhstallGUI() {
         initComponents();
@@ -307,9 +311,19 @@ public class KuhstallGUI extends javax.swing.JFrame {
         jMenu1.setText("Datei");
 
         jMenuItem4.setText("öffnen");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("speichern");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setText("speichern unter");
@@ -427,6 +441,7 @@ public class KuhstallGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_showLastCowDataActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        dateiManager.saveFile();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void buyCowMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyCowMenuItemActionPerformed
@@ -460,6 +475,14 @@ public class KuhstallGUI extends javax.swing.JFrame {
     private void bearNewCowMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bearNewCowMenuItemActionPerformed
         NotificationCenter.shared.processNotification(NotificationNames.SEND_BORE_NEW_CALF_GUI_TO_FRONT);
     }//GEN-LAST:event_bearNewCowMenuItemActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        dateiManager.selectFile();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        dateiManager.saveFile();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

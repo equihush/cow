@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package view;
+import allgemein.DateiManager;
 import allgemein.NotificationNames;
 import model.Kuh;
 import notificationcenter.*;
@@ -14,11 +15,13 @@ import notificationcenter.*;
  */
 public class KuhKaufenGUI extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form NeueKuh_GUI
      */
     public KuhKaufenGUI() {
         initComponents();
+        
     }
 
    
